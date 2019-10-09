@@ -1,0 +1,7 @@
+(define (three-factor-triangular-nums)
+  (define (iter x result)
+    (let ((n (/ (+ -1 (sqrt (+ 1 (* 8 x (+ x 1) (+ x 2))))) 2)))
+      (cond ((> x 636) result)
+            ((integer? n) (iter (+ x 1) (append result (list (list n x (* x (+ x 1) (+ x 2)))))))
+            (else (iter (+ x 1) result)))))
+  (iter 1 '()))
