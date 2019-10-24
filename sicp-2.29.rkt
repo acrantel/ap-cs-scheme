@@ -1,0 +1,40 @@
+(define make-mobile cons)
+(define left-branch car)
+(define right-branch cdr)
+
+(define make-branch cons)
+(define branch-length car)
+(define branch-structure cdr)
+
+(define weight? number?)
+(define mobile? pair?)
+
+(define (total-weight m)
+  (+
+   (cond ((weight? (branch-structure (left-branch m))) (branch-structure (left-branch m)))
+         (else (total-weight (branch-structure (left-branch m)))))
+   (cond ((weight? (branch-structure (right-branch m))) (branch-structure (right-branch m)))
+         (else (total-weight (branch-structure (right-branch m)))))))
+(define (balanced? m)
+  (=
+   (if (weight? (branch-structure (left-branch m)))
+       (* (branch-structure (left-branch m))
+          (branch-length (left-branch m)))
+       (* (total-weight (branch-structure (left-branch m)))
+          (branch-length (left-branch m))))
+   (if (weight? (branch-structure (right-branch m)))
+       (* (branch-structure (right-branch m))
+          (branch-length (right-branch m)))
+       (* (total-weight (branch-structure (right-branch m)))
+          (branch-length (right-branch m))))))
+
+;2.30
+(define (square x) (* x x))
+(define (square-tree tree) ; directly
+  (cond ((null? tree) '())
+        ((number? (car tree)) (cons (square (car tree)) (square-tree (cdr tree))))
+        (else (cons (square-tree (car tree)) (square-tree (cdr tree))))))
+(define (square-tree tree) ; using map
+  (cond ((number? tree) (square tree))
+        (else (map square-tree tree))))
+

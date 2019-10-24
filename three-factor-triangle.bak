@@ -7,10 +7,3 @@
             ((integer? n) (iter (+ x 1) (append result (list (list n x (* x (+ x 1) (+ x 2)))))))
             (else (iter (+ x 1) result)))))
   (iter 1 '()))
-
-(define (deep-reverse lst)
-  (cond ((null? lst) '())
-        ((list? (car lst)) (append (deep-reverse (cdr lst))
-                                   (list (deep-reverse (car lst)))))
-        (else (append (deep-reverse (cdr lst))
-                      (list (car lst))))))
